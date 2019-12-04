@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+	<h:head>
+		<title>Facelet Title</title>
+	</h:head>
+
+	<h:body>
+	
+	    <f:event type="preRenderView" listener="#{personaBean.listar()}" />
+		<p:growl id="msj" autoUpdate="true" />
+	
+		<h:form id="frm">
+			<p:outputLabel for="txtNombre" value="Nombre " />
+			<p:inputText id="txtNombre" value="#{personaBean.persona.nombre}" oncomplete="PF('wdlgDatos').show();"/>
+			
+			<p:outputLabel value="Sexo " />
+			<p:selectOneMenu value="#{personaBean.persona.sexo}">
+				<f:selectItem itemLabel="MASCULINO" itemValue="M"/>
+				<f:selectItem itemLabel="FEMENINO" itemValue="F"/>
+			</p:selectOneMenu>
+			
+			<p:commandButton value="Nuevo" oncomplete="PF('wdlgDatos').show();" onclick="#{personaBean.setAction('Registrar')}"/>
+			<p:commandButton value="Listar" actionListener="#{personaBean.listar()}" update="data" />
+			
+			<p:dataTable id="data" value="#{personaBean.lstPersonas}" var="persona">
+				<p:column headerText="Nombre">
+					<p:outputLabel value="#{persona.nombre}"></p:outputLabel>
+				</p:column>
+				
+				<p:column headerText="Sexo">
+					<p:outputLabel value="#{persona.sexo}">
+					<f:converter converterId="sexoConverter"/>
+					</p:outputLabel>
+				</p:column>
+				
+                <p:column headerText="Modificar">
+                   <p:commandLink value="Modificar" actionListener="#{personaBean.leerID(persona)}"  oncomplete="PF('wdlgDatos').show();" update=":dlgDatos" />
+                 </p:column>
+                 
+                 <p:column headerText="Eliminar">
+                   <p:commandLink value="Eliminar" actionListener="#{personaBean.eliminar(persona)}" update="data" />
+                 </p:column>
+				
+			</p:dataTable>
+		</h:form>
+		
+		<p:dialog header="Datos" widgetVar="wdlgDatos" id="dlgDatos">
+			<h:form>
+			<p:outputLabel value="Nombre" />
+			<p:inputText  value="#{personaBean.persona.nombre}"/>
+			
+			<p:outputLabel value="Sexo " />
+			<p:selectOneMenu value="#{personaBean.persona.sexo}">
+				<f:selectItem itemLabel="MASCULINO" itemValue="M"/>
+				<f:selectItem itemLabel="FEMENINO" itemValue="F"/>
+			</p:selectOneMenu>
+			
+			<p:commandButton value="#{personaBean.action}"  actionListener="#{personaBean.operar()}" oncomplete="PF('wdlgDatos').hide();" update=":frm:data"/>
+			<p:commandButton value="Cancelar"  immediate="true" oncomplete="PF('wdlgDatos').hide();"/>
+			</h:form>
+		</p:dialog>
+		
+	</h:body>
+
+</html>
