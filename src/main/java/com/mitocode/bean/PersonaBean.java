@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import com.mitocode.dao.PersonaDAO;
 import com.mitocode.model.Persona;
@@ -48,6 +49,12 @@ public class PersonaBean implements Serializable{
 		this.lstPersonas = lstPersonas;
 	}
 
+    private boolean isPostBack(){
+        boolean rpta;
+        rpta = FacesContext.getCurrentInstance().isPostback();
+        return rpta;
+    }
+	
 	private void registrar() throws Exception {
 		
 		PersonaDAO personaDAO;
@@ -55,20 +62,27 @@ public class PersonaBean implements Serializable{
 		try {
 			personaDAO = new PersonaDAO();
 			personaDAO.registrar(persona);
-			this.listar();
+            this.listar("V");
 		}
 		catch (Exception e) {
 			throw e;
 		}
 	}
 	
-	public void listar() throws Exception {
+	public void listar(String valor) throws Exception {
 		
 		PersonaDAO personaDAO;
 		
 		try {
-			personaDAO = new PersonaDAO();
-			lstPersonas = personaDAO.listar();
+            if(valor.equals('F')){
+                if(isPostBack() == false){
+                personaDAO = new PersonaDAO();
+                lstPersonas = personaDAO.listar();
+            }
+            }else{
+            	personaDAO = new PersonaDAO();
+                lstPersonas = personaDAO.listar();
+            }
 		}
 		catch (Exception e) {
 			throw e;
@@ -100,7 +114,7 @@ public class PersonaBean implements Serializable{
         try {
             dao = new PersonaDAO();
             dao.modificar(persona);
-            this.listar();
+            this.listar("V");
             
         } catch (Exception e) {
             throw e;
@@ -113,7 +127,7 @@ public class PersonaBean implements Serializable{
         try {
             dao = new PersonaDAO();
             dao.eliminar(persona);
-            this.listar();
+            this.listar("V");
             
         } catch (Exception e) {
             throw e;
