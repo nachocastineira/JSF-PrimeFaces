@@ -1,7 +1,13 @@
 package com.mitocode.model;
 
-public class DetalleVenta {
+import java.io.Serializable;
+
+public class DetalleVenta implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int codigo;
 	private Venta venta;
 	private Producto producto;

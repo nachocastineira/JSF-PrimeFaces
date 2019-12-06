@@ -9,28 +9,26 @@ import com.mitocode.model.Persona;
 
 public class PersonaDAO extends DAO{
 
-
 	public void registrar(Persona persona) throws Exception {
-
 		try {
 			this.conectar();
 			PreparedStatement st = this.getCn().prepareStatement("INSERT INTO mitocode.persona (nombre, sexo) VALUES (?, ?)");
 			st.setString(1, persona.getNombre());
 			st.setString(2, persona.getSexo());
 			st.executeUpdate();
+			
 		} catch (Exception e) {
 			throw e;
+			
 		} finally {
 			this.cerrar();
 		}
-
 	}
 
 	public List<Persona> listar() throws Exception {
 
 		List<Persona> lista;
 		ResultSet rs;
-
 		try {
 			this.conectar();
 			PreparedStatement st = this.getCn().prepareStatement("SELECT codigo, nombre, sexo FROM mitocode.persona");
@@ -45,12 +43,14 @@ public class PersonaDAO extends DAO{
 
 				lista.add(per);
 			}
+			
 		} catch (Exception e) {
 			throw e;
+			
 		} finally {
 			this.cerrar();
 		}
-
+		
 		return lista;
 	}
 	
@@ -58,7 +58,6 @@ public class PersonaDAO extends DAO{
 		
 		Persona persona = null;
 		ResultSet rs;
-
 		
 		try {
 			this.conectar();
@@ -75,6 +74,7 @@ public class PersonaDAO extends DAO{
 			
 		} catch (Exception e) {
 			throw e;
+			
 		} finally {
 			this.cerrar();
 		}
@@ -89,21 +89,25 @@ public class PersonaDAO extends DAO{
             st.setString(2, per.getSexo());
             st.setInt(3, per.getCodigo());
             st.executeUpdate();
+            
         } catch (Exception e) {
             throw e;
+            
         }finally{
             this.cerrar();
         }
     }
     
-    public void eliminar(Persona per) throws Exception{
+    public void eliminar(Persona per) throws Exception {
         try {
             this.conectar();
             PreparedStatement st = this.getCn().prepareStatement("DELETE FROM mitocode.persona WHERE codigo = ?");
             st.setInt(1, per.getCodigo());
             st.executeUpdate();
+            
         } catch (Exception e) {
             throw e;
+            
         }finally{
             this.cerrar();
         }

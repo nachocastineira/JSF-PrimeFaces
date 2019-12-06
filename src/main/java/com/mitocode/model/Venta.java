@@ -1,9 +1,14 @@
 package com.mitocode.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Venta {
+public class Venta implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int codigo;
 	private Date fecha;
 	private Persona persona;

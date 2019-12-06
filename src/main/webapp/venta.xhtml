@@ -1,51 +1,60 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
 
-    <body>
+<h:head>
+	<title>Ventas</title>
+</h:head>
 
-        <ui:composition template="./WEB-INF/templates/plantilla.xhtml">
+<body>
+	<ui:composition template="./WEB-INF/templates/plantilla.xhtml">
+		<ui:define name="content">
+		
+			<p:spacer width="500px" height="20px" />
 
-            <ui:define name="content">
-                
-                <f:event type="preRenderView" listener="#{personaBean.listar('F')}" />
-                <f:event type="preRenderView" listener="#{productoBean.listar('F')}" />
-                
-                <h:form>
-                    <p:outputLabel value="Persona" />
-                    <p:selectOneMenu />
-                    
-                    <p:outputLabel value="Producto" />
-                    <p:selectOneMenu />
-                    
-                    <p:outputLabel value="Cantidad" />
-                    <p:inputText />
-                    
-                    <p:commandButton value="Agregar" />
-                    
-                    <p:dataTable>
-                        <p:column headerText="Nombre Producto" >
-                            
-                        </p:column>
-                        
-                        <p:column headerText="Precio" >
-                            
-                        </p:column>
-                        
-                        <p:column headerText="Cantidad" >
-                            
-                        </p:column>
-                    </p:dataTable>
-                    <p:commandButton value="Registrar"/>
-                </h:form>
-                
-            </ui:define>
+			<f:event type="preRenderView" listener="#{personaBean.listar('F')}" />
+			<f:event type="preRenderView" listener="#{productoBean.listar('F')}" />
 
-        </ui:composition>
+			<p:growl id="msj" autoUpdate="true" showDetail="true" />
 
-    </body>
+			<h:form>
+				<p:outputLabel value="Persona" />
+				<p:selectOneMenu value="#{ventaBean.venta.persona}" converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
+					<f:selectItems value="#{personaBean.lstPersonas}" var="per" itemLabel="#{per.nombre}" itemValue="#{per}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Producto" />
+				<p:selectOneMenu value="#{ventaBean.producto}" converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
+					<f:selectItems value="#{productoBean.lstProductos}" var="pro" itemLabel="#{pro.nombre}" itemValue="#{pro}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Cantidad" />
+				<p:inputText value="#{ventaBean.cantidad}" />
+
+				<p:commandButton value="Agregar" actionListener="#{ventaBean.agregar()}" update="detalle" />
+
+				<p:spacer width="500px" height="20px" />
+
+				<p:dataTable id="detalle" value="#{ventaBean.lista}" var="det">
+					<p:column headerText="Nombre Producto">#{det.producto.nombre}</p:column>
+					<p:column headerText="Precio">#{det.producto.precio}</p:column>
+					<p:column headerText="Cantidad">#{det.cantidad}</p:column>				
+				</p:dataTable>
+
+				<p:commandButton value="Registrar" actionListener="#{ventaBean.registrar()}" action="venta?faces-redirect=true" />
+				
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+
+</body>
 </html>

@@ -5,23 +5,25 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
     <h:head>
         <title>Productos</title>
     </h:head>
 
     <body>
-
         <ui:composition template="./WEB-INF/templates/plantilla.xhtml">
-
-            <ui:define name="content">                
+            <ui:define name="content">  
+               
+               <p:spacer width="500px" height="20px" />
+                
                 <f:event type="preRenderView" listener="#{productoBean.listar('F')}" />
                 <p:growl id="msj" autoUpdate="true" />
 
                 <h:form id="frm">
-
                     <p:commandButton value="Nuevo" oncomplete="PF('wdlgDatos').show();" actionListener="#{productoBean.setAccion('Registrar')}" update=":dlgDatos" />
                     
                     <p:dataTable id="data" value="#{productoBean.lstProductos}" var="producto">
+                    
                         <p:column headerText="Nombre">
                             <p:outputLabel value="#{producto.nombre}" />
                         </p:column>
@@ -56,8 +58,8 @@
                         <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('wdlgDatos').hide();"/>
                     </h:form>
                 </p:dialog>
+            
             </ui:define>
-
         </ui:composition>
 
     </body>

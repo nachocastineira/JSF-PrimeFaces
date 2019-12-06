@@ -32,11 +32,11 @@ public class ProductoBean implements Serializable{
         return lstProductos;
     }
 
-    public void setLstProductos(List<Producto> lstProductos) {
+    public void setLstProductos (List<Producto> lstProductos) {
         this.lstProductos = lstProductos;
     }  
         
-    public Producto getProducto(){
+    public Producto getProducto() {
         return producto;
     }
     
@@ -50,7 +50,8 @@ public class ProductoBean implements Serializable{
         return rpta;
     }
     
-    public void opera() throws Exception{
+    public void opera() throws Exception {
+    	
         switch(accion){
             case "Registrar":
                 this.registrar();
@@ -69,31 +70,33 @@ public class ProductoBean implements Serializable{
         this.producto.setPrecio(0);
     }
     
-    private void registrar() throws Exception{
+    private void registrar() throws Exception {
         ProductoDAO dao;
         
         try {
             dao = new ProductoDAO();
             dao.registrar(producto);
             this.listar("V");
+            
         } catch (Exception e) {
             throw e;
         }
     }
     
-    private void modificar() throws Exception{
+    private void modificar() throws Exception {
         ProductoDAO dao;
         
         try {
             dao = new ProductoDAO();
             dao.modificar(producto);
             this.listar("V");
+            
         } catch (Exception e) {
             throw e;
         }
     }
     
-    public void listar(String valor) throws Exception{
+    public void listar (String valor) throws Exception {
         ProductoDAO dao;
         
         try {
@@ -112,7 +115,7 @@ public class ProductoBean implements Serializable{
         }
     }
     
-    public void leerID(Producto pro) throws Exception{
+    public void leerID (Producto pro) throws Exception {
         ProductoDAO dao;
         Producto temp;
         
@@ -124,18 +127,20 @@ public class ProductoBean implements Serializable{
                 this.producto = temp;
                 this.accion = "Modificar";
             }
+            
         } catch (Exception e) {
             throw e;
         }
     }    
         
-    public void eliminar(Producto pro) throws Exception{
+    public void eliminar (Producto pro) throws Exception {
         ProductoDAO dao;
         
         try {
             dao = new ProductoDAO();
             dao.eliminar(pro);
             this.listar("V");
+            
         } catch (Exception e) {
             throw e;
         }

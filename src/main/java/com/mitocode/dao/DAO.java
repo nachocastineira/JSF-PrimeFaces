@@ -27,6 +27,7 @@ public class DAO {
 	}
 	
 	public void cerrar() throws Exception {
+		
 		try {
 			if (cn != null) {
 				

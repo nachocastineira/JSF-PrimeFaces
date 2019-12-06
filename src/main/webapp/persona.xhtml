@@ -12,14 +12,16 @@
     <body>
     
 	<ui:composition template="./WEB-INF/templates/plantilla.xhtml">
-	
 		<ui:define name="content">	
+		
 		    <f:event type="preRenderView" listener="#{personaBean.listar('F')}" />
 			<p:growl id="msj" autoUpdate="true" />
 	
-		<h:form id="frm">
-			
+		<p:spacer width="500px" height="20px" />
+	
+		<h:form id="frm">	
 			<p:commandButton value="Nuevo" oncomplete="PF('wdlgDatos').show();" actionListener="#{personaBean.setAction('Registrar')}" update="data"/>
+			
 			
 			<p:dataTable id="data" value="#{personaBean.lstPersonas}" var="persona">
 				<p:column headerText="Nombre">
@@ -58,8 +60,9 @@
 			<p:commandButton value="Cancelar"  immediate="true" oncomplete="PF('wdlgDatos').hide();"/>
 			</h:form>
 		</p:dialog>
-		</ui:define>
 		
+		</ui:define>		
 	</ui:composition>
+	
 	</body>
 </html>

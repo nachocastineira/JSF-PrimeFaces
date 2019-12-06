@@ -1,7 +1,13 @@
 package com.mitocode.model;
 
-public class Producto {
+import java.io.Serializable;
+
+public class Producto implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int codigo;
 	private String nombre;
 	private double precio;
@@ -27,7 +33,7 @@ public class Producto {
 	
 	@Override
 	public String toString() {
-		return "Producto [codigo=" + codigo + "]";
+		return String.format("%s[codigo=%d]", getClass().getSimpleName(), getCodigo());
 	}
 	
 	@Override
